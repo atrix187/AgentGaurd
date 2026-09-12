@@ -1,7 +1,7 @@
 """AgentGuard red flag ruleset.
 
-Deliverable for Amer: the authoritative list of fraud patterns that must
-ground his risk evaluator system prompt. Each entry follows the shared
+The authoritative list of fraud patterns that must ground the risk
+evaluator system prompt. Each entry follows the shared
 interface contract:
 
     {

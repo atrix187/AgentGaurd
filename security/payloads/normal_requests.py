@@ -4,7 +4,7 @@ Used to prove the system does not over-block legitimate requests: false
 positives matter as much as catching attacks. Every payload is a routine
 business message with no urgency, no authority claims, no override
 instructions, no prompt injection, and no first-time large payout to a new
-counterpart. Vendors are Ayham's three seeded records.
+counterpart. Vendors are the three seeded records.
 """
 
 NORMAL_REQUESTS = [

@@ -1,10 +1,10 @@
 """
 audit/audit_formatter.py
 -------------------------
-Turns Amer's raw pipeline output into human-readable summary strings
+Turns the raw pipeline output into human-readable summary strings
 and a clean, structured audit entry ready to write to Supabase.
 
-Phase 2 of Noor's spec.
+Phase 2 of the project spec.
 """
 
 from datetime import datetime, timezone
@@ -104,7 +104,7 @@ def build_audit_entry(pipeline_output):
     """
     Main formatter entry point (Phase 2, step 4).
 
-    Takes Amer's full pipeline output dict (already sanitized with safe
+    Takes the full pipeline output dict (already sanitized with safe
     defaults by the Decision Engine) and returns a clean, structured
     audit entry dict with every field the `audit_logs` table expects.
 

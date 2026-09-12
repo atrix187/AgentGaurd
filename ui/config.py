@@ -1,6 +1,6 @@
 """Streamlit-side configuration for the AgentGuard demo UI.
 
-When running under Streamlit the script directory (tariq/) is on sys.path, so
+When running under Streamlit the script directory (ui/) is on sys.path, so
 every `import config` in the real modules (core/, agent/, decision/, camara/,
 audit/) resolves to THIS file. Rather than duplicate the shared settings here
 and risk drift, this shim loads the repo-root config.py (single source of
@@ -15,7 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 _ROOT = Path(__file__).resolve().parent.parent
-_TARIQ_DIR = Path(__file__).resolve().parent
+_UI_DIR = Path(__file__).resolve().parent
 
 
 
@@ -28,7 +28,7 @@ if str(_ROOT) not in sys.path:
 
 
 load_dotenv(_ROOT / ".env")
-load_dotenv(_TARIQ_DIR / ".env")
+load_dotenv(_UI_DIR / ".env")
 
 
 

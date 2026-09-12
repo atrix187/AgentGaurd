@@ -1,8 +1,8 @@
 # AgentGuard Security Review Checklist
 
-Owner: Ghaith (ghaith/security)
+Owner: security track
 
-Status: **EXECUTED — 8/8 PASS** (run against the integrated pipeline with the live LLM, `python test_ghaith_scenarios.py`)
+Status: **EXECUTED — 8/8 PASS** (run against the integrated pipeline with the live LLM, `python tests/test_security_scenarios.py`)
 
 > The expected decisions below follow the locked override rule: BLOCKED +
 > number verification verified=True escalates to **STEP_UP** (human review,
@@ -10,7 +10,7 @@ Status: **EXECUTED — 8/8 PASS** (run against the integrated pipeline with the 
 > verified (verified=False) or evaluation fails. In the sandbox the attack
 > scenarios synthesize phone numbers, and cached number verification defaults
 > to verified=True for unknown numbers, so the HIGH-risk attacks resolve to
-> STEP_UP in `test_ghaith_scenarios.py`.
+> STEP_UP in `tests/test_security_scenarios.py`.
 
 ## How to run
 
@@ -18,8 +18,8 @@ Run every payload through `run_agentguard(request_payload)` and compare
 `final_decision` against `expected_decision`.
 
 ```python
-from ghaith.payloads.normal_requests import NORMAL_REQUESTS
-from ghaith.payloads.attack_requests import ATTACK_REQUESTS
+from security.payloads.normal_requests import NORMAL_REQUESTS
+from security.payloads.attack_requests import ATTACK_REQUESTS
 from core.langgraph_pipeline import run_agentguard
 
 for payload in NORMAL_REQUESTS + ATTACK_REQUESTS:
@@ -28,11 +28,11 @@ for payload in NORMAL_REQUESTS + ATTACK_REQUESTS:
     # decision, pass/fail, and any flags/telecom_signals in the table below
 ```
 
-Amer's runner already exists in the tree: `test_ghaith_scenarios.py` (8 cases).
+The scenario runner lives in the tree: `tests/test_security_scenarios.py` (8 cases).
 
 ## Canonical telecom signal contract (locked)
 
-These shapes come from Ayham's real `camara/` wrappers — this is the
+These shapes come from the real `camara/` wrappers — this is the
 authoritative schema the whole pipeline must read:
 
 | Signal | Keys |
@@ -43,10 +43,10 @@ authoritative schema the whole pipeline must read:
 | `number_verification` | `verified: bool`, `verification_method: str` |
 
 Verified consumers as of the merge: `core/langgraph_pipeline.py:make_decision`,
-`audit/audit_formatter.py:format_telecom_summary`, `tariq/app.py:_signal_rows`,
-`tariq/mocks.py` fixtures.
+`audit/audit_formatter.py:format_telecom_summary`, `ui/app.py:_signal_rows`,
+`ui/mocks.py` fixtures.
 
-## Decision override rule (ruled by Ghaith)
+## Decision override rule (locked)
 
 Number Verification confirms *identity*, it does **not** clear a fraud-rated
 request. In `make_decision`:
@@ -69,11 +69,11 @@ request. In `make_decision`:
 | A4 | Subtle Low-Signal Attack | attack_requests.py | STEP_UP | STEP_UP | PASS |
 | A5 | Combined Attack | attack_requests.py | STEP_UP | STEP_UP | PASS |
 
-Regenerated with `python test_ghaith_scenarios.py` on 2026-09-12.
+Regenerated with `python tests/test_security_scenarios.py` on 2026-09-12.
 
 ## Edge-case verification
 
-- [x] **Tool contract consistency** — Ayham's camara shapes now feed
+- [x] **Tool contract consistency** — the camara shapes now feed
       `make_decision` and the formatter directly; verified by the 7-case
       decision-logic probe (HIGH→STEP_UP-not-APPROVED, fail-open removed).
 - [x] **Number Verification fail-open** — HIGH/approve path + `verified=True`
@@ -95,9 +95,9 @@ Regenerated with `python test_ghaith_scenarios.py` on 2026-09-12.
 
 ## Escalation protocol
 
-- **False negative** (attack approved): report to Amer immediately.
-- **False positive** (normal request blocked): report to Amer immediately.
-- **Telecom signals not changing the decision**: report to Amer immediately.
+- **False negative** (attack approved): file a fix against the core pipeline immediately.
+- **False positive** (normal request blocked): file a fix against the core pipeline immediately.
+- **Telecom signals not changing the decision**: file a fix against the core pipeline immediately.
 
 ## Environment gate (required before execution)
 

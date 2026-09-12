@@ -1,24 +1,25 @@
 """
-Runs all 8 of Ghaith's scenarios (3 normal + 5 attack) against the AgentGuard
+Runs all 8 demo scenarios (3 normal + 5 attack) against the AgentGuard
 pipeline and reports pass/fail per case, plus a summary.
 
-Expected decisions follow the locked override rule in
-ghaith/review/security_review_checklist.md: BLOCKED + number verification
-verified=True escalates to STEP_UP (human review, never auto-approve). Since
-the sandbox tests synthesize phone numbers (cached number verification
-defaults to verified=True for unknown numbers), the three HIGH-risk attack
-cases resolve to STEP_UP here. A request is hard-BLOCKED when identity cannot
-be verified (number verification verified=False) or when evaluation fails.
+Expected decisions follow the locked override rule defined in
+security/review/security_review_checklist.md: BLOCKED + number verification
+verified=True escalates to STEP_UP (human review, never auto-approve). The
+attack scenarios use the simulator number +99999991000, which resolves to
+verified=True, so the HIGH-risk attacks land on STEP_UP here. A request is
+hard-BLOCKED when identity cannot be verified (verified=False) or when
+evaluation fails.
 
-Payload text below is copied verbatim from Ghaith's `ghaith/security` branch
-(ghaith/payloads/normal_requests.py and ghaith/payloads/attack_requests.py).
-If Ghaith updates his payloads, re-sync this list from his branch.
+Scenario texts mirror the payloads in security/payloads/*.py.
 
 Run from the repo root:
-    python test_ghaith_scenarios.py
+    python tests/test_security_scenarios.py
 """
 
+import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agent.procurement_agent import DummyProcurementAgent
 from core.langgraph_pipeline import run_agentguard

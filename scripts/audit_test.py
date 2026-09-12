@@ -1,7 +1,7 @@
 ﻿"""
 scripts/audit_test.py
 ---------------------
-Noor's layer test (previously noor/decision-audit main.py).
+Audit layer test.
 
 Builds 3 mock pipeline outputs (one per decision path), runs each through
 DecisionEngine.process(), and verifies the audit trail works end to end.

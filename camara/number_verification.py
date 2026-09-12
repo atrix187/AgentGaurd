@@ -18,8 +18,7 @@ directly - no redirect_uri, no ngrok, no manual code-paste step needed.
 If/when the team moves off Simulator mode to a real billing account, the
 real 3-legged OAuth flow (device opens a URL over mobile data, consents,
 redirects back with a code) becomes necessary. That path isn't built here
-since it's out of scope until billing is set up - flag it to Ghaith if the
-team needs it before the demo.
+since it's out of scope until billing is set up.
 """
 import logging
 from camara._client import get_client
@@ -39,7 +38,7 @@ SIMULATOR_VERIFIED = {
 def trigger_number_verification(phone_number: str) -> dict:
     """
     FIXED SIGNATURE - this is what tools/tool_stubs.py imports and what
-    Amer's pipeline calls. Do not change this signature.
+    the pipeline calls. Do not change this signature.
 
     In "cached" mode: always returns the pre-recorded response, no API call.
     In "live" mode: calls the real Simulator endpoint directly.

@@ -119,7 +119,7 @@ def _score_request(raw_request: str) -> tuple[int, list[str], str]:
 
 
 def run_agentguard(request_payload: dict) -> dict:
-    """Mirrors core/langgraph_pipeline.py on amer/ai-core, including its routing.
+    """Mirrors core/langgraph_pipeline.py, including its routing.
 
     The routing is the point of the demo: LOW risk skips telecom entirely, and
     only HIGH risk triggers device swap and number verification.

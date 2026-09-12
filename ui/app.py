@@ -1,8 +1,8 @@
 """AgentGuard - demo interface.
 
-Built to the specification in Tariq's document. Three sections: request input,
-live pipeline trace, audit trail. No logic lives here - this layer calls what
-Amer and Noor built and displays the result.
+Built to the demo-interface specification. Three sections: request input,
+live pipeline trace, audit trail. No logic lives here - this layer calls the
+pipeline and displays the result.
 """
 
 import streamlit as st

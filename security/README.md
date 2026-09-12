@@ -1,33 +1,29 @@
-# AgentGuard Security Layer — Ghaith
+# AgentGuard Security Layer
 
-Offensive security layer: attack payloads, red flag ruleset, and security
-review that prove the system actually works.
+Offensive security artifacts for AgentGuard: attack payloads, the red-flag
+ruleset, and the security review that proves the system actually works.
 
-## What I own
-
-- Attack payloads — realistic malicious request strings
-- Red flag ruleset — definitive fraud pattern list, handed to Amer to ground
-  his risk evaluator system prompt
-- Demo scenario texts — exact pair Tariq pre-fills in the dropdown
-- Security review — auditing the integrated pipeline for gaps and bypasses
-
-## What I do not own
-
-The LLM/LangGraph pipeline (Amer), CAMARA APIs/database (Ayham), decision
-engine/audit log (Noor), the frontend (Tariq). Integration across branches
-is shared.
-
-## Deliverables
+## Contents
 
 | Artifact | File | Status |
 |---|---|---|
-| Red flag ruleset (5 categories, 6 patterns each) | `ghaith/red_flags/red_flag_ruleset.py` | Ready — sent to Amer |
-| 3 normal request payloads | `ghaith/payloads/normal_requests.py` | Ready |
-| 5 attack request payloads | `ghaith/payloads/attack_requests.py` | Ready |
-| Demo pair (normal + attack) for Tariq | see below | Ready — pre-filled in Tariq's UI |
-| Security review checklist | `ghaith/review/security_review_checklist.md` | Branch merged into `integration` — ready to execute once env gate is cleared |
+| Red flag ruleset (5 categories) | `security/red_flags/red_flag_ruleset.py` | Ready |
+| 3 normal request payloads | `security/payloads/normal_requests.py` | Ready |
+| 5 attack request payloads | `security/payloads/attack_requests.py` | Ready |
+| Demo scenario pair (normal + attack) | documented below | Ready — pre-filled in `ui/config.py` |
+| Security review checklist | `security/review/security_review_checklist.md` | EXECUTED — 8/8 PASS |
 
-## Demo scenario pair (for Tariq's dropdown)
+## Purpose
+
+- **Attack payloads** — realistic malicious request strings (CEO fraud, prompt
+  injection, override instructions, low-signal social engineering).
+- **Red flag ruleset** — the definitive fraud pattern list that grounds the
+  risk evaluator's system prompt.
+- **Security review** — an adversarial audit of the integrated pipeline for
+  gaps and bypasses, exported as a runnable checklist with a locked decision
+  rule.
+
+## Demo scenario pair (pre-filled in `ui/config.py`)
 
 ```python
 DEMO_SCENARIOS = [
@@ -55,7 +51,8 @@ DEMO_SCENARIOS = [
         # HIGH fraud + SIM/device swap on the approver's number. Number
         # Verification succeeds (verified=True), so the locked override rule
         # routes this to STEP_UP (human review) rather than auto-approving —
-        # see security_review_checklist.md. The action is NEVER auto-executed.
+        # see security/review/security_review_checklist.md. The action is
+        # NEVER auto-executed.
         "expected_decision": "STEP_UP",
     },
 ]
@@ -69,8 +66,8 @@ clearest, most dramatic combination.
 
 The attacker impersonates the CEO under a manufactured deadline, ordering an
 urgent bank-detail change for a vendor with no payment history. AgentGuard's
-red flag ruleset catches the urgency, the verbal-authority claim, and the
-new counterparty, and steps out of band to verify the approver through real
+red flag ruleset catches the urgency, the verbal-authority claim, and the new
+counterparty, and steps out of band to verify the approver through real
 telecom signals before honoring the override demand — even though the request
 explicitly ordered those checks to be skipped. Because a bank detail can
 never be un-seen once a payment is released, stopping the change at the
@@ -78,12 +75,17 @@ verification gate is the difference between a momentary wrong number and a
 wired loss; that is exactly the accountability Gulf procurement teams need
 once an AI agent holds real authority over money.
 
-## Phase status
+## How to run
 
-- [x] Red flag ruleset built — sent to Amer, reflected in his system prompt
+```bash
+python tests/test_security_scenarios.py    # all 8 scenarios end-to-end
+```
+
+## Status
+
+- [x] Red flag ruleset built and reflected in the evaluator system prompt
 - [x] 3 normal + 5 attack payloads written and documented
-- [x] Demo pair finalized — pre-filled in Tariq's UI (tariq/config.py)
-- [ ] Security review executed against integrated pipeline (blocked: awaiting
-      `.env` gate — GROQ/GOOGLE/SUPABASE/NOKIA keys, see checklist)
-- [ ] False positives / false negatives reported (part of review phase)
+- [x] Demo pair finalized — pre-filled in `ui/config.py`
+- [x] Security review executed against the integrated pipeline (8/8 PASS)
+- [x] False positives / negatives resolved (see review checklist)
 - [x] Demo narrative written

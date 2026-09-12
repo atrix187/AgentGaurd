@@ -4,7 +4,7 @@ audit/audit_logger.py
 Writes decisions to the `audit_logs` Supabase table and reads them
 back for the frontend / demo.
 
-Phase 3 of Noor's spec.
+Phase 3 of the project spec.
 """
 
 import json
@@ -35,7 +35,7 @@ class AuditLogger:
 
     def log(self, pipeline_output):
         """
-        Phase 3, step 2: builds the audit entry from Amer's pipeline
+        Phase 3, step 2: builds the audit entry from the pipeline
         output, serializes jsonb fields, and inserts it into the
         audit_logs table.
 
@@ -67,7 +67,7 @@ class AuditLogger:
         """
         Phase 3, step 3: fetches the most recent audit entries ordered
         by timestamp descending. Returns [] on any failure — never
-        raises. Tariq calls this to display the audit trail.
+        raises. Used by the demo UI to display the audit trail.
         """
         if self.client is None:
             print("[audit_logger] No Supabase client available. Returning empty list.")

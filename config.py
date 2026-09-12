@@ -2,7 +2,7 @@
 AgentGuard - Unified configuration.
 
 Single source of truth for environment variables shared across every layer:
-LLM core (Amer), CAMARA infra (Ayham), decision/audit (Noor). Do not split.
+LLM core, CAMARA infra, decision/audit. Do not split.
 
 Usage: `import config` then read attributes directly, or call
 `config.require(*names)` at startup to fail loudly instead of mysteriously later.

@@ -1,5 +1,5 @@
 """
-AgentGuard - Infra test harness (previously ayham/infra-camara main.py).
+AgentGuard - Infra test harness.
 
 Run this to test everything: Supabase connectivity, all 3 simple CAMARA
 checks (SIM Swap, Device Status, Device Swap), and Number Verification.

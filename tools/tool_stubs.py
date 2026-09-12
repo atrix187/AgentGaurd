@@ -1,10 +1,9 @@
 """
-AgentGuard - Tool bridge for Amer's LangGraph pipeline.
+AgentGuard - Tool bridge for the LangGraph pipeline.
 
-Amer imports these 4 functions directly. Signatures and return formats are
-locked per the spec - do not rename, do not change params, do not change
-return shapes. If something needs to change here, that's a conversation with
-Ghaith first, not a unilateral edit.
+These 4 functions are imported directly by the pipeline. Signatures and return
+formats are locked per the spec - do not rename, do not change params, do not
+change return shapes without a coordinated change to the pipeline caller.
 """
 from camara.sim_swap import check_sim_swap
 from camara.device_status import check_device_status

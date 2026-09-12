@@ -86,7 +86,7 @@ Built **only** with the hackathon's allowed tooling (Resource & Tooling Guide):
 
 - **LangGraph** — stateful, conditionally-routed agent pipeline (`core/langgraph_pipeline.py`). The agent *decides* whether to call network APIs: LOW risk skips them entirely; MEDIUM/HIGH consult SIM swap + device status; HIGH additionally requires device swap + number verification.
 - **Groq (GPT-OSS-120B), fallback Gemini Flash** — the risk-reasoning brain (`core/risk_evaluator.py`). Returns structured JSON (score, level, flags, reasoning) that is schema-validated before it is trusted; any failure fails **closed** to BLOCK.
-- **Red-flag ruleset** (`ghaith/red_flags/red_flag_ruleset.py`) — the fraud taxonomy grounding the prompt: urgency, CEO-fraud claims, override instructions, new-vendor + large-payment, and prompt injection targeting the evaluator itself.
+- **Red-flag ruleset** (`security/red_flags/red_flag_ruleset.py`) — the fraud taxonomy grounding the prompt: urgency, CEO-fraud claims, override instructions, new-vendor + large-payment, and prompt injection targeting the evaluator itself.
 - **DecisionEngine + audit trail** (`decision/`, `audit/`) — sanitizes, persists every verdict to Supabase, fail-safe closed; never crashes open.
 - **CAMARA as trusted data sources, not buttons** — the agent calls them as tools, reasons over the returned signals, and applies override rules. Everything is user-triggered only in the sense that a human review happens when flagged.
 
@@ -99,8 +99,9 @@ camara/              Nokia Network-as-Code CAMARA clients (SIM swap, device stat
 tools/               Tool-stub bridge locking the CAMARA signatures the pipeline imports
 decision/            DecisionEngine (sanitize, override rules, verdict)
 audit/               Audit formatter + Supabase audit logger
-ghaith/              Red-flag ruleset, 8 attack/normal payloads, security review checklist
-tariq/               Streamlit demo UI (mock + real backends via USE_MOCK_BACKEND)
+security/            Red-flag ruleset, 8 attack/normal payloads, security review checklist
+ui/                  Streamlit demo UI (mock + real backends via USE_MOCK_BACKEND)
+tests/               test_security_scenarios.py — 8 end-to-end scenario checks
 database/            Supabase schema (vendors, audit_logs)
 seeds/               Seed data for the 3 demo vendors
 scripts/             infra_test.py (Supabase + CAMARA smoke test), audit_test.py
@@ -142,7 +143,7 @@ Apply the database schema and seed vendors in the Supabase SQL editor:
 **Streamlit UI (recommended for judging / live demo):**
 
 ```bash
-streamlit run tariq/app.py
+streamlit run ui/app.py
 ```
 
 - With `USE_MOCK_BACKEND=false` (set in `.env`): full real pipeline — LangGraph + Groq LLM + Nokia CAMARA simulator + Supabase audit trail.
@@ -159,7 +160,7 @@ python main.py
 ```bash
 python scripts/infra_test.py            # Supabase + all CAMARA checks
 python scripts/audit_test.py            # DecisionEngine across APPROVED/STEP_UP/BLOCKED
-python test_ghaith_scenarios.py         # all 8 attack/normal scenarios end-to-end
+python tests/test_security_scenarios.py    # all 8 attack/normal scenarios end-to-end
 ```
 
 ### 5. Live demo script (2 minutes)

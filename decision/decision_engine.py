@@ -1,11 +1,11 @@
 """
 decision/decision_engine.py
 -----------------------------
-The main entry point for AgentGuard's decision layer. Takes Amer's raw
+The main entry point for AgentGuard's decision layer. Takes the raw
 LangGraph pipeline output, validates/sanitizes it, writes an audit
-entry, and returns the clean verdict dict Tariq's frontend consumes.
+entry, and returns the clean verdict dict the UI consumes.
 
-Phase 4 of Noor's spec.
+Phase 4 of the project spec.
 """
 
 from datetime import datetime, timezone
@@ -31,7 +31,7 @@ class DecisionEngine:
         """
         Fail-safe input validation. Fills any missing field with a safe
         default and defaults an unrecognized/missing decision to
-        BLOCKED. Never raises, regardless of what Amer's pipeline sends.
+        BLOCKED. Never raises, regardless of what the pipeline sends.
         """
         pipeline_output = pipeline_output if isinstance(pipeline_output, dict) else {}
 
@@ -82,10 +82,10 @@ class DecisionEngine:
         """
         Main entry point (Phase 4, step 2).
 
-        1. Validates/sanitizes Amer's raw pipeline output
+        1. Validates/sanitizes the raw pipeline output
         2. Builds the audit entry
         3. Writes it to the audit_logs table via AuditLogger.log
-        4. Returns the final response dict for Tariq's frontend
+        4. Returns the final response dict for the UI
 
         Never raises — a malformed pipeline_output degrades to a
         BLOCKED, low-confidence response rather than crashing.
@@ -123,7 +123,7 @@ class DecisionEngine:
     def get_audit_trail(self, limit=20):
         """
         Phase 4, step 4: returns the most recent audit entries.
-        Tariq imports this to render the audit trail view.
+        Used by the UI to render the audit trail view.
         """
         return self.audit_logger.get_recent_logs(limit)
 
