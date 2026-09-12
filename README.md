@@ -2,7 +2,7 @@
 
 **AgentGuard intercepts high-risk AI agent actions and verifies them against live telecom signals before a single payment leaves the building.**
 
-Built for the **GSMA MENA Open Gateway Hackathon** — Theme 4: *Secure Fintech, Payments & Anti-Fraud Innovation* — using GSMA Open Gateway **CAMARA APIs** exposed on the **Nokia Network-as-Code** platform, orchestrated by an **AI agent layer** built with LangGraph and LLMs.
+Built for the **GSMA MENA Open Gateway Hackathon** — Theme 1: *Trusted Digital Identity & Cross-Border Verification* — using GSMA Open Gateway **CAMARA APIs** exposed on the **Nokia Network-as-Code** platform, orchestrated by an **AI agent layer** built with LangGraph and LLMs.
 
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](#) [![LangGraph](https://img.shields.io/badge/LangGraph-agent-blueviolet.svg)](#) [![CAMARA](https://img.shields.io/badge/CAMARA-Open%20Gateway-2ea44f.svg)](#) [![Nokia NaC](https://img.shields.io/badge/Nokia-Network%20as%20Code-4b6cb7.svg)](#)
 
@@ -201,6 +201,6 @@ Built for the hackathon by a five-person cybersecurity team from Amman, Jordan �
 
 ---
 
-**Theme:** Secure Fintech, Payments & Anti-Fraud Innovation
+**Theme:** Trusted Digital Identity & Cross-Border Verification
 **Platform:** Nokia Network-as-Code · GSMA Open Gateway CAMARA APIs
 **AI Agent Layer:** LangGraph + Groq/Gemini (approved hackathon tooling only)
