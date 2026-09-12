@@ -59,7 +59,7 @@ Human/attacker request ──▶ Enterprise AI agent (procurement copilot)
                        ── reasoning, approver identity
 ```
 
-### The telecom override rules (this is the magic)
+### The telecom override rules 
 
 | Signal (CAMARA API) | On the approver's number | Override rule |
 |---|---|---|
@@ -162,12 +162,6 @@ python scripts/infra_test.py            # Supabase + all CAMARA checks
 python scripts/audit_test.py            # DecisionEngine across APPROVED/STEP_UP/BLOCKED
 python tests/test_security_scenarios.py    # all 8 attack/normal scenarios end-to-end
 ```
-
-### 5. Live demo script (2 minutes)
-
-1. Open the Streamlit UI. Pick **"Normal Request"** and hit **Run AgentGuard** — the agent returns ✅ APPROVED, reasoning shows why it skipped telecom checks.
-2. Pick **"Attack Request"** — the LLM flags urgency language, a verbal CEO-fraud claim and an override instruction (risk 9/10). The agent calls the network APIs; the approver's simulator number comes back with a recent SIM *and* device swap. Verdict: ⚠ STEP-UP — **the fraud never auto-executes** — with each telecom signal shown in the trace. (Switch the approver number to `+99999991001`, which fails Number Verification, and the same request hard-blocks with ❌.)
-3. Scroll to the **Audit Trail** — both decisions are persisted with full reasoning for the compliance story.
 
 ## Scenario Coverage (8 test cases)
 
